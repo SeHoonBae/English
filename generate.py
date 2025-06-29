@@ -28,7 +28,7 @@ def save_used_hashes(hashes):
     with open(USED_FILE, 'w', encoding='utf-8') as f:
         json.dump(list(hashes), f, ensure_ascii=False, indent=2)
 
-# 문장 5개 선택 (중복 제거)
+# 문장 10개 선택 (중복 제거)
 def select_new_sentences():
     df = pd.read_csv(CSV_FILE)
     used_hashes = load_used_hashes()
@@ -38,7 +38,7 @@ def select_new_sentences():
         h = get_hash(row['english'])
         if h not in used_hashes:
             new_rows.append((row['english'], row['korean'], row['pronunciation'], h))
-        if len(new_rows) >= 5:
+        if len(new_rows) >= 10:
             break
 
     # 해시 업데이트
