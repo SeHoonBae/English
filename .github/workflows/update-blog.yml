@@ -2,7 +2,7 @@ name: Generate Daily Blog Post
 
 on:
   schedule:
-    - cron: '10 30 * * *'
+    - cron: '33 10 * * *'
   workflow_dispatch:
 
 jobs:
