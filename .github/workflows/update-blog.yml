@@ -2,8 +2,8 @@ name: Generate Daily Blog Post
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 한국시간 오전 7시 = UTC 22시
-  workflow_dispatch:       # 수동 실행도 가능
+    - cron: '0 22 * * *'  # 매일 오전 7시 KST
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,8 +27,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git remote remove origin
           git remote add origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+
           git add .
           git commit -m "🔁 Editorial 템플릿 자동 포스트 반영" || echo "No changes to commit"
           git push origin HEAD:main
