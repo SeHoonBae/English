@@ -2,21 +2,29 @@ name: Generate Daily Blog Post
 
 on:
   schedule:
-    - cron: '33 10 * * *'
+    - cron: '0 22 * * *'  # ✅ 매일 07:00 KST = 22:00 UTC (전날 밤 10시)
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
       - run: python generate.py
-      - run: |
+
+      - name: Commit and push changes
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
+        run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "🔁 Editorial 템플릿 자동 포스트 반영" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git push
