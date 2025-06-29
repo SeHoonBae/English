@@ -21,13 +21,17 @@ jobs:
       - name: Run generator script
         run: python generate.py
 
-      - name: Commit and push changes using Personal Access Token
+      - name: Commit and push changes using PAT
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+
+          # 기존 remote 제거 후 PAT 기반 remote 등록
+          git remote remove origin
+          git remote add origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+
           git add .
           git commit -m "🔁 Editorial 템플릿 자동 포스트 반영" || echo "No changes to commit"
           git push origin HEAD:main
