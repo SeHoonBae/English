@@ -40,13 +40,22 @@ def get_10_unique_entries():
 
     return new_entries
 
-# index.html 백업 함수
+# index.html 백업 함수 (상대 경로 보존)
 def backup_index():
     if not os.path.exists(INDEX_FILE):
         print("index.html not found!")
         return
     os.makedirs(POST_FOLDER, exist_ok=True)
-    shutil.copy(INDEX_FILE, POST_PATH)
+    with open(INDEX_FILE, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    # 상대 경로로 css, js 등 경로 수정
+    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
+
+    with open(POST_PATH, "w", encoding="utf-8") as f:
+        f.write(html)
+
     print(f"Backed up index.html to {POST_PATH}")
 
 # 본문 <section>들만 찾아서 교체하고 사이드바 업데이트
@@ -55,7 +64,7 @@ def generate_new_index(entries):
         html = f.read()
 
     # 본문 <section> 교체
-    section_pattern = re.compile(r'(\s*<section>.*?</section>)', re.DOTALL)
+    section_pattern = re.compile(r'(<section>\s*<div class="features">.*?</section>)', re.DOTALL)
     all_sections = section_pattern.findall(html)
     if not all_sections:
         print("No <section> blocks found.")
@@ -82,20 +91,14 @@ def generate_new_index(entries):
 
     html = before + ''.join(new_sections) + after
 
-    # 사이드바 <ul> 메뉴에 링크 추가
-    menu_pattern = re.compile(r'(<ul>.*?</ul>)', re.DOTALL)
-    menu_match = menu_pattern.search(html)
-    if menu_match:
-        menu_html = menu_match.group(1)
+    # 사이드바 메뉴 삽입
+    menu_block = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
+    year_opener = f'<span class="opener">{POST_YEAR}년 모음</span>'
+    month_opener = f'<span class="opener">{POST_MONTH}월 모음</span>'
 
-        # 새 항목 추가할 HTML
-        new_link = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
-
-        # 연도와 월 위치 찾아서 끼워 넣기
-        month_block_pattern = re.compile(rf'(<span class="opener">{POST_YEAR}년 모음</span>\s*<ul>.*?<span class="opener">{POST_MONTH}월 모음</span>\s*<ul>)(.*?)(</ul>)', re.DOTALL)
-        menu_html_new = month_block_pattern.sub(lambda m: m.group(1) + new_link + m.group(2) + m.group(3), menu_html)
-
-        html = html.replace(menu_html, menu_html_new)
+    if year_opener in html and month_opener in html:
+        pattern = re.compile(rf'({month_opener}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
+        html = pattern.sub(lambda m: m.group(1) + '\n' + menu_block + m.group(2) + m.group(3), html)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(html)
