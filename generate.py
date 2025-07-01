@@ -50,8 +50,8 @@ def backup_index():
         html = f.read()
 
     # 상대 경로로 css, js 등 경로 수정
-    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
-    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
+    html = html.replace("href=\"assets/", "href=\"../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
