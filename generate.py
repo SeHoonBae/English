@@ -16,7 +16,10 @@ yesterday = now - timedelta(days=1)
 # 날짜 포맷
 TODAY = now.strftime("%Y-%m-%d")
 YESTERDAY = yesterday.strftime("%Y-%m-%d")
-POST_FOLDER = os.path.join(POSTS_DIR, yesterday.strftime("%Y"), yesterday.strftime("%m"))
+POST_YEAR = yesterday.strftime("%Y")
+POST_MONTH = yesterday.strftime("%m")
+POST_DAY = yesterday.strftime("%d")
+POST_FOLDER = os.path.join(POSTS_DIR, POST_YEAR, POST_MONTH)
 POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 
 # 문장 10세트(4줄 × 10개) 추출 함수
@@ -46,27 +49,22 @@ def backup_index():
     shutil.copy(INDEX_FILE, POST_PATH)
     print(f"Backed up index.html to {POST_PATH}")
 
-# 본문 <section>들만 찾아서 교체
+# 본문 <section>들만 찾아서 교체하고 사이드바 업데이트
 def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 기존 section 영역을 전부 찾아 제거
-    new_body = ""
-    pattern = re.compile(r'(\s*<section>.*?</section>)', re.DOTALL)
-    all_sections = pattern.findall(html)
-
+    # 본문 <section> 교체
+    section_pattern = re.compile(r'(\s*<section>.*?</section>)', re.DOTALL)
+    all_sections = section_pattern.findall(html)
     if not all_sections:
         print("No <section> blocks found.")
         return
-
     first_section_start = html.find(all_sections[0])
     last_section_end = html.rfind(all_sections[-1]) + len(all_sections[-1])
-
     before = html[:first_section_start]
     after = html[last_section_end:]
 
-    # 새 section들 생성
     new_sections = []
     for i, entry in enumerate(entries):
         new_sections.append(f'''
@@ -82,12 +80,27 @@ def generate_new_index(entries):
 	</div>
 </section>''')
 
-    new_html = before + ''.join(new_sections) + after
+    html = before + ''.join(new_sections) + after
+
+    # 사이드바 <ul> 메뉴에 링크 추가
+    menu_pattern = re.compile(r'(<ul>.*?</ul>)', re.DOTALL)
+    menu_match = menu_pattern.search(html)
+    if menu_match:
+        menu_html = menu_match.group(1)
+
+        # 새 항목 추가할 HTML
+        new_link = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
+
+        # 연도와 월 위치 찾아서 끼워 넣기
+        month_block_pattern = re.compile(rf'(<span class="opener">{POST_YEAR}년 모음</span>\s*<ul>.*?<span class="opener">{POST_MONTH}월 모음</span>\s*<ul>)(.*?)(</ul>)', re.DOTALL)
+        menu_html_new = month_block_pattern.sub(lambda m: m.group(1) + new_link + m.group(2) + m.group(3), menu_html)
+
+        html = html.replace(menu_html, menu_html_new)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
-        f.write(new_html)
+        f.write(html)
 
-    print("New index.html created with updated <section> blocks only.")
+    print("New index.html created with updated <section> blocks and sidebar menu.")
 
 if __name__ == "__main__":
     entries = get_10_unique_entries()
