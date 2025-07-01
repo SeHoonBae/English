@@ -1,5 +1,6 @@
 import os
 import shutil
+import re
 from datetime import datetime, timedelta
 
 # 경로 상수
@@ -45,42 +46,48 @@ def backup_index():
     shutil.copy(INDEX_FILE, POST_PATH)
     print(f"Backed up index.html to {POST_PATH}")
 
-# 기존 index.html을 로드하고 본문만 새로 채워 넣기
+# 본문 <section>들만 찾아서 교체
 def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    start_marker = '<!-- Section -->'
-    split_point = html.find(start_marker)
-    if split_point == -1:
-        print("Section marker not found in index.html")
+    # 기존 section 영역을 전부 찾아 제거
+    new_body = ""
+    pattern = re.compile(r'(\s*<section>.*?</section>)', re.DOTALL)
+    all_sections = pattern.findall(html)
+
+    if not all_sections:
+        print("No <section> blocks found.")
         return
 
-    new_sections = [start_marker]
+    first_section_start = html.find(all_sections[0])
+    last_section_end = html.rfind(all_sections[-1]) + len(all_sections[-1])
+
+    before = html[:first_section_start]
+    after = html[last_section_end:]
+
+    # 새 section들 생성
+    new_sections = []
     for i, entry in enumerate(entries):
         new_sections.append(f'''
-        <section>
-            <div class="features">
-                <article>
-                    <div class="content">
-                        <h2>{i+1}. {entry[0]}</h2>
-                        <h2>{entry[1]}</h2>
-                        <h3>{entry[2]}</h3>
-                    </div>
-                </article>
-            </div>
-        </section>''')
+<section>
+	<div class="features">
+		<article>
+			<div class="content">
+				<h2>{i+1}. {entry[0]}</h2>
+				<h2>{entry[1]}</h2>
+				<h3>{entry[2]}</h3>
+			</div>
+		</article>
+	</div>
+</section>''')
 
-    before = html[:split_point]
-    after = html[split_point:]
-
-    # 기존 섹션 이후 내용 제거하고 새 섹션만 추가
-    new_html = before + '\n'.join(new_sections) + '\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t</div>' + after.split('</div>\n\t\t\t</div>')[-1]
+    new_html = before + ''.join(new_sections) + after
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(new_html)
 
-    print("New index.html created with original layout preserved")
+    print("New index.html created with updated <section> blocks only.")
 
 if __name__ == "__main__":
     entries = get_10_unique_entries()
