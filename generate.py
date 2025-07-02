@@ -93,14 +93,21 @@ def generate_new_index(entries):
 
     html = before + ''.join(new_sections) + after
 
-    # 사이드바 전체 유지하면서 새로운 날짜만 누적으로 추가
-    menu_block = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
-    year_block = f'<span class=\"opener\">{POST_YEAR}년 모음</span>'
-    month_block = f'<span class=\"opener\">{POST_MONTH}월 모음</span>'
+    # 사이드바 메뉴 삽입: 기존 전체 nav 메뉴 블럭 안에서만 수정
+    nav_pattern = re.compile(r'(<nav id=\"menu\">.*?<ul>)(.*?)(</ul>.*?</nav>)', re.DOTALL)
+    nav_match = nav_pattern.search(html)
+    if nav_match:
+        menu_head = nav_match.group(1)
+        menu_body = nav_match.group(2)
+        menu_tail = nav_match.group(3)
 
-    # 1. 연도 블럭 존재 확인
-    if year_block not in html:
-        year_html = f'''<li>
+        # 삽입할 메뉴 항목
+        menu_block = f'<li><a href=\"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html\">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
+        year_block = f'<span class=\"opener\">{POST_YEAR}년 모음</span>'
+        month_block = f'<span class=\"opener\">{POST_MONTH}월 모음</span>'
+
+        if year_block not in menu_body:
+            year_html = f'''<li>
 	{year_block}
 	<ul>
 		<li>
@@ -111,17 +118,17 @@ def generate_new_index(entries):
 		</li>
 	</ul>
 </li>'''
-        html = html.replace('</ul>', year_html + '\n</ul>', 1)
+            menu_body += year_html
+        elif month_block not in menu_body:
+            pattern = re.compile(rf'({year_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
+            menu_body = pattern.sub(lambda m: m.group(1) + f'\n<li>{month_block}<ul>{menu_block}</ul></li>' + m.group(3), menu_body)
+        else:
+            pattern = re.compile(rf'({month_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
+            if not re.search(rf'>{POST_MONTH}월 {POST_DAY}일 영어문장 10개<', menu_body):
+                menu_body = pattern.sub(lambda m: m.group(1) + f'\n{menu_block}' + m.group(2) + m.group(3), menu_body)
 
-    # 2. 월 블럭 존재 여부
-    elif month_block not in html:
-        pattern = re.compile(rf'({year_block}\s*<ul>)(.*?)</ul>', re.DOTALL)
-        html = pattern.sub(lambda m: m.group(1) + f'\n<li>{month_block}<ul>{menu_block}</ul></li>' + '</ul>', html)
-
-    # 3. 날짜 항목 추가
-    else:
-        pattern = re.compile(rf'({month_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
-        html = pattern.sub(lambda m: m.group(1) + f'\n{menu_block}' + m.group(2) + m.group(3), html)
+        new_nav_html = menu_head + menu_body + menu_tail
+        html = nav_pattern.sub(new_nav_html, html)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(html)
