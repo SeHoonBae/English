@@ -51,7 +51,6 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 상대 경로로 css, js 등 경로 수정
     html = html.replace("href=\"assets/", "href=\"../../../assets/")
     html = html.replace("src=\"assets/", "src=\"../../../assets/")
 
@@ -60,29 +59,15 @@ def backup_index():
 
     print(f"Backed up index.html to {POST_PATH}")
 
-# 본문 <section>들만 찾아서 교체하고 사이드바 업데이트
-def generate_new_index(entries):
-    with open(INDEX_FILE, "r", encoding="utf-8") as f:
-        html = f.read()
-
-    # 본문 <section> 교체
-    section_pattern = re.compile(r'(<section>\s*<div class=\"features\">.*?</section>)', re.DOTALL)
-    all_sections = section_pattern.findall(html)
-    if not all_sections:
-        print("No <section> blocks found.")
-        return
-    first_section_start = html.find(all_sections[0])
-    last_section_end = html.rfind(all_sections[-1]) + len(all_sections[-1])
-    before = html[:first_section_start]
-    after = html[last_section_end:]
-
-    new_sections = []
+# 새로운 섹션 블록 HTML 생성
+def build_sections(entries):
+    blocks = []
     for i, entry in enumerate(entries):
-        new_sections.append(f'''
+        blocks.append(f'''
 <section>
-	<div class=\"features\">
+	<div class="features">
 		<article>
-			<div class=\"content\">
+			<div class="content">
 				<h2>{i+1}. {entry[0]}</h2>
 				<h2>{entry[1]}</h2>
 				<h3>{entry[2]}</h3>
@@ -90,44 +75,83 @@ def generate_new_index(entries):
 		</article>
 	</div>
 </section>''')
+    return '\n'.join(blocks)
 
-    html = before + ''.join(new_sections) + after
+# nav 메뉴 업데이트
+def update_sidebar(nav_html):
+    from bs4 import BeautifulSoup
 
-    # 전체 <nav id="menu"> 블록 파싱
+    soup = BeautifulSoup(nav_html, "html.parser")
+    root_ul = soup.find("ul")
+    if not root_ul:
+        return nav_html
+
+    # 2025년 모음 찾기 또는 생성
+    year_li = None
+    for li in root_ul.find_all("li", recursive=False):
+        if li.find("span", string=f"{POST_YEAR}년 모음"):
+            year_li = li
+            break
+
+    if not year_li:
+        year_li = soup.new_tag("li")
+        year_span = soup.new_tag("span", **{"class": "opener"})
+        year_span.string = f"{POST_YEAR}년 모음"
+        year_ul = soup.new_tag("ul")
+        year_li.append(year_span)
+        year_li.append(year_ul)
+        root_ul.append(year_li)
+    else:
+        year_ul = year_li.find("ul")
+
+    # 월 모음 찾기 또는 생성
+    month_li = None
+    for li in year_ul.find_all("li", recursive=False):
+        if li.find("span", string=f"{POST_MONTH}월 모음"):
+            month_li = li
+            break
+
+    if not month_li:
+        month_li = soup.new_tag("li")
+        month_span = soup.new_tag("span", **{"class": "opener"})
+        month_span.string = f"{POST_MONTH}월 모음"
+        month_ul = soup.new_tag("ul")
+        month_li.append(month_span)
+        month_li.append(month_ul)
+        year_ul.append(month_li)
+    else:
+        month_ul = month_li.find("ul")
+
+    # 날짜 항목이 없을 경우에만 추가
+    href_val = f"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
+    link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
+    if not any(a for a in month_li.find_all("a") if a.get("href") == href_val):
+        new_li = soup.new_tag("li")
+        new_a = soup.new_tag("a", href=href_val)
+        new_a.string = link_text
+        new_li.append(new_a)
+        month_li.find("ul").append(new_li)
+
+    return str(soup.find("nav", id="menu"))
+
+# index.html 생성
+def generate_new_index(entries):
+    with open(INDEX_FILE, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    # 본문 section 대체
+    section_pattern = re.compile(r'(<section>\s*<div class=\"features\">.*?</section>)', re.DOTALL)
+    html = section_pattern.sub("", html)
+    new_sections = build_sections(entries)
+    html = html.replace("<!-- Section -->", f"<!-- Section -->\n{new_sections}")
+
+    # nav 메뉴 수정
     nav_pattern = re.compile(r'(<nav id=\"menu\">.*?</nav>)', re.DOTALL)
     nav_match = nav_pattern.search(html)
     if nav_match:
         nav_html = nav_match.group(1)
-
-        # 삽입할 항목
-        menu_block = f'<li><a href=\"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html\">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
-        year_block = f'<span class=\"opener\">{POST_YEAR}년 모음</span>'
-        month_block = f'<span class=\"opener\">{POST_MONTH}월 모음</span>'
-
-        # 1. 연도 블럭 없으면 통째로 추가
-        if year_block not in nav_html:
-            new_year_block = f'''<li>
-	{year_block}
-	<ul>
-		<li>
-			{month_block}
-			<ul>
-				{menu_block}
-			</ul>
-		</li>
-	</ul>
-</li>'''
-            nav_html = nav_html.replace('</ul>', new_year_block + '\n</ul>', 1)
-        # 2. 월 블럭 없으면 해당 연도 블럭 내에 추가
-        elif month_block not in nav_html:
-            year_ul_pattern = re.compile(rf'({year_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
-            nav_html = year_ul_pattern.sub(lambda m: m.group(1) + f'\n<li>{month_block}<ul>{menu_block}</ul></li>' + m.group(3), nav_html)
-        # 3. 날짜 항목 없으면 추가
-        elif f'>{POST_MONTH}월 {POST_DAY}일 영어문장 10개<' not in nav_html:
-            month_ul_pattern = re.compile(rf'({month_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
-            nav_html = month_ul_pattern.sub(lambda m: m.group(1) + f'\n{menu_block}' + m.group(2) + m.group(3), nav_html)
-
-        html = nav_pattern.sub(nav_html, html)
+        updated_nav = update_sidebar(nav_html)
+        html = html.replace(nav_html, updated_nav)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(html)
