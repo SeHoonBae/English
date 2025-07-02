@@ -148,21 +148,33 @@ def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 기존 section 블록 전체 제거
-    html = re.sub(r'<section>.*?<\/section>', '', html, flags=re.DOTALL)
+    # 첫 번째 <div class="inner"> 블록만 처리
+    split_html = html.split('<div class="inner">')
+    if len(split_html) < 2:
+        return
+
+    before_inner = split_html[0]
+    inner_and_rest = '<div class="inner">' + split_html[1]
+    inner_parts = inner_and_rest.split('</div>', 1)
+
+    # section 블록 제거 후 추가
+    content_block = re.sub(r'<section>.*?</section>', '', inner_parts[0], flags=re.DOTALL)
     new_sections = build_sections(entries)
-    html = html.replace("<!-- Section -->", f"<!-- Section -->\n{new_sections}")
+    updated_inner = content_block + new_sections + '</div>'
+
+    # 나머지 복원
+    updated_html = before_inner + updated_inner + inner_parts[1]
 
     # nav 메뉴 업데이트
-    nav_pattern = re.compile(r'(<nav id=\"menu\">.*?<\/nav>)', re.DOTALL)
-    nav_match = nav_pattern.search(html)
+    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
+    nav_match = nav_pattern.search(updated_html)
     if nav_match:
         nav_html = nav_match.group(1)
         updated_nav = update_sidebar(nav_html)
-        html = html.replace(nav_html, updated_nav)
+        updated_html = updated_html.replace(nav_html, updated_nav)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
-        f.write(html)
+        f.write(updated_html)
 
     print("New index.html created with updated <section> blocks and sidebar menu.")
 
