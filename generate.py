@@ -109,14 +109,12 @@ def generate_new_index(entries):
         if year_block not in menu_body:
             year_html = f'''<li>
 	{year_block}
-	<ul>
 		<li>
 			{month_block}
 			<ul>
 				{menu_block}
 			</ul>
 		</li>
-	</ul>
 </li>'''
             menu_body += year_html
         elif month_block not in menu_body:
