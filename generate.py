@@ -160,8 +160,11 @@ def generate_new_index(entries):
         print("Cannot find main > inner block")
         return
 
-    for section in main_inner.find_all("section"):
-        section.decompose()
+    # 기존 섹션 중 "오늘의 영어 10문장" 제목 이후만 제거
+    banner = main_inner.find("section", id="banner")
+    if banner:
+        for sibling in list(banner.find_next_siblings("section")):
+            sibling.decompose()
 
     new_html = build_sections(entries)
     new_soup = BeautifulSoup(new_html, "html.parser")
