@@ -59,8 +59,8 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
-    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
+    html = html.replace("href=\"assets/", "href=\"../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
