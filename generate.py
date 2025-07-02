@@ -29,12 +29,21 @@ def get_10_unique_entries():
         lines = [line.strip() for line in f if line.strip()]
 
     entries = [lines[i:i+4] for i in range(0, len(lines), 4)]
-    new_entries = entries[:10]
+    new_entries = []
+    used_set = set()
+
+    for entry in entries:
+        key = tuple(entry)
+        if key not in used_set:
+            new_entries.append(entry)
+            used_set.add(key)
+        if len(new_entries) == 10:
+            break
 
     if len(new_entries) < 10:
         return []
 
-    remaining = entries[10:]
+    remaining = entries[len(new_entries):]
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
         for entry in remaining:
             f.write('\n'.join(entry) + '\n\n')
@@ -50,8 +59,8 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
-    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
+    html = html.replace("href=\"assets/", "href=\"../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
@@ -139,8 +148,8 @@ def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 모든 section 제거 후 새로운 section 삽입
-    html = re.sub(r'(<section>\s*<div class=\"features\">.*?</section>)', '', html, flags=re.DOTALL)
+    # 기존 section 블록 제거 (features 포함 전체 블록)
+    html = re.sub(r'<section>\s*<div class=\"features\">.*?</section>', '', html, flags=re.DOTALL)
     new_sections = build_sections(entries)
     html = html.replace("<!-- Section -->", f"<!-- Section -->\n{new_sections}")
 
