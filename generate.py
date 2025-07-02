@@ -148,27 +148,27 @@ def generate_new_index(entries):
     # nav 메뉴 먼저 추출 및 교체
     nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
     nav_match = nav_pattern.search(html)
-    updated_nav = nav_match.group(1)
     if nav_match:
         updated_nav = update_sidebar(nav_match.group(1))
         html = html.replace(nav_match.group(1), updated_nav)
 
-    # section 삽입 (main > inner 내에서만)
-    inner_start = html.find('<div id="main">')
-    sidebar_start = html.find('<div id="sidebar">')
-    if inner_start == -1 or sidebar_start == -1:
-        print("Could not locate main/sidebar blocks.")
+    # 기존 section 제거 후 새 section 삽입
+    soup = BeautifulSoup(html, "html.parser")
+    main_inner = soup.select_one("div#main > div.inner")
+    if not main_inner:
+        print("Cannot find main > inner block")
         return
 
-    main_html = html[inner_start:sidebar_start]
-    main_clean = re.sub(r'<section>.*?</section>', '', main_html, flags=re.DOTALL)
-    new_sections = build_sections(entries)
-    updated_main = main_clean + new_sections
+    for section in main_inner.find_all("section"):
+        section.decompose()
 
-    updated_html = html[:inner_start] + updated_main + html[sidebar_start:]
+    new_html = build_sections(entries)
+    new_soup = BeautifulSoup(new_html, "html.parser")
+    for section in new_soup.find_all("section"):
+        main_inner.append(section)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
-        f.write(updated_html)
+        f.write(str(soup.prettify(formatter="html")))
 
     print("New index.html created with updated <section> blocks and sidebar menu.")
 
