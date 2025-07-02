@@ -43,9 +43,9 @@ def get_10_unique_entries():
     if len(new_entries) < 10:
         return []
 
-    remaining = entries[len(new_entries):]
+    # 남은 문장만 다시 파일에 기록
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
-        for entry in remaining:
+        for entry in entries[len(new_entries):]:
             f.write('\n'.join(entry) + '\n\n')
 
     return new_entries
@@ -133,7 +133,7 @@ def update_sidebar(nav_html):
     else:
         month_ul = month_li.find("ul")
 
-    # 날짜 링크 추가
+    # 중복 제거 후 날짜 링크 추가
     if not any(a for a in month_ul.find_all("a") if a.get("href") == href_val):
         new_li = soup.new_tag("li")
         new_a = soup.new_tag("a", href=href_val)
@@ -148,13 +148,13 @@ def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 기존 section 블록 제거 (features 포함 전체 블록)
-    html = re.sub(r'<section>\s*<div class=\"features\">.*?</section>', '', html, flags=re.DOTALL)
+    # 기존 section 블록 전체 제거
+    html = re.sub(r'<section>.*?<\/section>', '', html, flags=re.DOTALL)
     new_sections = build_sections(entries)
     html = html.replace("<!-- Section -->", f"<!-- Section -->\n{new_sections}")
 
     # nav 메뉴 업데이트
-    nav_pattern = re.compile(r'(<nav id=\"menu\">.*?</nav>)', re.DOTALL)
+    nav_pattern = re.compile(r'(<nav id=\"menu\">.*?<\/nav>)', re.DOTALL)
     nav_match = nav_pattern.search(html)
     if nav_match:
         nav_html = nav_match.group(1)
