@@ -59,8 +59,8 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = html.replace("href=\"assets/", "href=\"../../../assets/")
-    html = html.replace("src=\"assets/", "src=\"../../../assets/")
+    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
@@ -97,7 +97,6 @@ def update_sidebar(nav_html):
     link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
     href_val = f"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
 
-    # 연도 li
     year_li = None
     for li in root_ul.find_all("li", recursive=False):
         if li.find("span", string=year_str):
@@ -115,7 +114,6 @@ def update_sidebar(nav_html):
     else:
         year_ul = year_li.find("ul")
 
-    # 월 li
     month_li = None
     for li in year_ul.find_all("li", recursive=False):
         if li.find("span", string=month_str):
@@ -133,7 +131,6 @@ def update_sidebar(nav_html):
     else:
         month_ul = month_li.find("ul")
 
-    # 중복 제거 후 날짜 링크 추가
     if not any(a for a in month_ul.find_all("a") if a.get("href") == href_val):
         new_li = soup.new_tag("li")
         new_a = soup.new_tag("a", href=href_val)
@@ -148,30 +145,27 @@ def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 첫 번째 <div class="inner"> 블록만 처리
-    split_html = html.split('<div class="inner">')
-    if len(split_html) < 2:
+    # nav 메뉴 먼저 추출 및 교체
+    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
+    nav_match = nav_pattern.search(html)
+    updated_nav = nav_match.group(1)
+    if nav_match:
+        updated_nav = update_sidebar(nav_match.group(1))
+        html = html.replace(nav_match.group(1), updated_nav)
+
+    # section 삽입 (main > inner 내에서만)
+    inner_start = html.find('<div id="main">')
+    sidebar_start = html.find('<div id="sidebar">')
+    if inner_start == -1 or sidebar_start == -1:
+        print("Could not locate main/sidebar blocks.")
         return
 
-    before_inner = split_html[0]
-    inner_and_rest = '<div class="inner">' + split_html[1]
-    inner_parts = inner_and_rest.split('</div>', 1)
-
-    # section 블록 제거 후 추가
-    content_block = re.sub(r'<section>.*?</section>', '', inner_parts[0], flags=re.DOTALL)
+    main_html = html[inner_start:sidebar_start]
+    main_clean = re.sub(r'<section>.*?</section>', '', main_html, flags=re.DOTALL)
     new_sections = build_sections(entries)
-    updated_inner = content_block + new_sections + '</div>'
+    updated_main = main_clean + new_sections
 
-    # 나머지 복원
-    updated_html = before_inner + updated_inner + inner_parts[1]
-
-    # nav 메뉴 업데이트
-    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
-    nav_match = nav_pattern.search(updated_html)
-    if nav_match:
-        nav_html = nav_match.group(1)
-        updated_nav = update_sidebar(nav_html)
-        updated_html = updated_html.replace(nav_html, updated_nav)
+    updated_html = html[:inner_start] + updated_main + html[sidebar_start:]
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(updated_html)
