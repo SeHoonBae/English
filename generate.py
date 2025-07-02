@@ -2,6 +2,7 @@ import os
 import shutil
 import re
 from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
 
 # 경로 상수
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,7 +24,6 @@ POST_FOLDER = os.path.join(POSTS_DIR, POST_YEAR, POST_MONTH)
 POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 
 # 문장 10세트(4줄 × 10개) 추출 함수
-# 사용된 문장은 파일에서 제거
 def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
@@ -34,7 +34,6 @@ def get_10_unique_entries():
     if len(new_entries) < 10:
         return []
 
-    # 사용된 문장은 제거하고 파일 덮어쓰기
     remaining = entries[10:]
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
         for entry in remaining:
@@ -42,7 +41,7 @@ def get_10_unique_entries():
 
     return new_entries
 
-# index.html 백업 함수 (상대 경로 보존)
+# index.html 백업 함수
 def backup_index():
     if not os.path.exists(INDEX_FILE):
         print("index.html not found!")
@@ -51,8 +50,8 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = html.replace("href=\"assets/", "href=\"../../../assets/")
-    html = html.replace("src=\"assets/", "src=\"../../../assets/")
+    html = html.replace("href=\"assets/", "href=\"../../../../assets/")
+    html = html.replace("src=\"assets/", "src=\"../../../../assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
@@ -79,24 +78,27 @@ def build_sections(entries):
 
 # nav 메뉴 업데이트
 def update_sidebar(nav_html):
-    from bs4 import BeautifulSoup
-
     soup = BeautifulSoup(nav_html, "html.parser")
     root_ul = soup.find("ul")
     if not root_ul:
         return nav_html
 
-    # 2025년 모음 찾기 또는 생성
+    year_str = f"{POST_YEAR}년 모음"
+    month_str = f"{POST_MONTH}월 모음"
+    link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
+    href_val = f"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
+
+    # 연도 li
     year_li = None
     for li in root_ul.find_all("li", recursive=False):
-        if li.find("span", string=f"{POST_YEAR}년 모음"):
+        if li.find("span", string=year_str):
             year_li = li
             break
 
     if not year_li:
         year_li = soup.new_tag("li")
         year_span = soup.new_tag("span", **{"class": "opener"})
-        year_span.string = f"{POST_YEAR}년 모음"
+        year_span.string = year_str
         year_ul = soup.new_tag("ul")
         year_li.append(year_span)
         year_li.append(year_ul)
@@ -104,17 +106,17 @@ def update_sidebar(nav_html):
     else:
         year_ul = year_li.find("ul")
 
-    # 월 모음 찾기 또는 생성
+    # 월 li
     month_li = None
     for li in year_ul.find_all("li", recursive=False):
-        if li.find("span", string=f"{POST_MONTH}월 모음"):
+        if li.find("span", string=month_str):
             month_li = li
             break
 
     if not month_li:
         month_li = soup.new_tag("li")
         month_span = soup.new_tag("span", **{"class": "opener"})
-        month_span.string = f"{POST_MONTH}월 모음"
+        month_span.string = month_str
         month_ul = soup.new_tag("ul")
         month_li.append(month_span)
         month_li.append(month_ul)
@@ -122,15 +124,13 @@ def update_sidebar(nav_html):
     else:
         month_ul = month_li.find("ul")
 
-    # 날짜 항목이 없을 경우에만 추가
-    href_val = f"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
-    link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
-    if not any(a for a in month_li.find_all("a") if a.get("href") == href_val):
+    # 날짜 링크 추가
+    if not any(a for a in month_ul.find_all("a") if a.get("href") == href_val):
         new_li = soup.new_tag("li")
         new_a = soup.new_tag("a", href=href_val)
         new_a.string = link_text
         new_li.append(new_a)
-        month_li.find("ul").append(new_li)
+        month_ul.append(new_li)
 
     return str(soup.find("nav", id="menu"))
 
@@ -139,13 +139,12 @@ def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 본문 section 대체
-    section_pattern = re.compile(r'(<section>\s*<div class=\"features\">.*?</section>)', re.DOTALL)
-    html = section_pattern.sub("", html)
+    # 모든 section 제거 후 새로운 section 삽입
+    html = re.sub(r'(<section>\s*<div class=\"features\">.*?</section>)', '', html, flags=re.DOTALL)
     new_sections = build_sections(entries)
     html = html.replace("<!-- Section -->", f"<!-- Section -->\n{new_sections}")
 
-    # nav 메뉴 수정
+    # nav 메뉴 업데이트
     nav_pattern = re.compile(r'(<nav id=\"menu\">.*?</nav>)', re.DOTALL)
     nav_match = nav_pattern.search(html)
     if nav_match:
