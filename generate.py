@@ -64,7 +64,7 @@ def generate_new_index(entries):
         html = f.read()
 
     # 본문 <section> 교체
-    section_pattern = re.compile(r'(<section>\s*<div class="features">.*?</section>)', re.DOTALL)
+    section_pattern = re.compile(r'(<section>\s*<div class=\"features\">.*?</section>)', re.DOTALL)
     all_sections = section_pattern.findall(html)
     if not all_sections:
         print("No <section> blocks found.")
@@ -78,9 +78,9 @@ def generate_new_index(entries):
     for i, entry in enumerate(entries):
         new_sections.append(f'''
 <section>
-	<div class="features">
+	<div class=\"features\">
 		<article>
-			<div class="content">
+			<div class=\"content\">
 				<h2>{i+1}. {entry[0]}</h2>
 				<h2>{entry[1]}</h2>
 				<h3>{entry[2]}</h3>
@@ -91,14 +91,39 @@ def generate_new_index(entries):
 
     html = before + ''.join(new_sections) + after
 
-    # 사이드바 메뉴 삽입
-    menu_block = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
-    year_opener = f'<span class="opener">{POST_YEAR}년 모음</span>'
-    month_opener = f'<span class="opener">{POST_MONTH}월 모음</span>'
+    # 사이드바 메뉴 삽입 또는 생성
+    sidebar_pattern = re.compile(r'(<ul>.*?</ul>)', re.DOTALL)
+    sidebar_match = sidebar_pattern.search(html)
+    if sidebar_match:
+        menu_html = sidebar_match.group(1)
+        menu_block = f'<li><a href="/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html">{POST_MONTH}월 {POST_DAY}일 영어문장 10개</a></li>'
+        year_block = f'<span class="opener">{POST_YEAR}년 모음</span>'
+        month_block = f'<span class="opener">{POST_MONTH}월 모음</span>'
 
-    if year_opener in html and month_opener in html:
-        pattern = re.compile(rf'({month_opener}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
-        html = pattern.sub(lambda m: m.group(1) + '\n' + menu_block + m.group(2) + m.group(3), html)
+        if year_block in menu_html:
+            if month_block in menu_html:
+                # 월 블럭도 있을 때 → 기존에 삽입
+                pattern = re.compile(rf'({month_block}\s*<ul>)(.*?)(</ul>)', re.DOTALL)
+                menu_html = pattern.sub(lambda m: m.group(1) + '\n' + menu_block + m.group(2) + m.group(3), menu_html)
+            else:
+                # 연도는 있지만 월이 없을 때
+                menu_html = menu_html.replace(year_block, year_block + f'\n<ul><li>{month_block}<ul>{menu_block}</ul></li></ul>')
+        else:
+            # 연도 블록도 없을 때 전체 생성
+            insertion = f'''<li>
+	{year_block}
+	<ul>
+		<li>
+			{month_block}
+			<ul>
+				{menu_block}
+			</ul>
+		</li>
+	</ul>
+</li>'''
+            menu_html = menu_html.replace('</ul>', insertion + '\n</ul>', 1)
+
+        html = html.replace(sidebar_match.group(1), menu_html)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(html)
