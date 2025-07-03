@@ -1,5 +1,4 @@
 import os
-import shutil
 import re
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
@@ -59,6 +58,9 @@ def backup_index():
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
+    # 경로 정리 (/assets 기준으로)
+    html = html.replace("href=\"assets/", "href=\"/assets/")
+    html = html.replace("src=\"assets/", "src=\"/assets/")
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(html)
@@ -93,7 +95,7 @@ def update_sidebar(nav_html):
     year_str = f"{POST_YEAR}년 모음"
     month_str = f"{POST_MONTH}월 모음"
     link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
-    href_val = f"/English/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
+    href_val = f"/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
 
     year_li = None
     for li in root_ul.find_all("li", recursive=False):
