@@ -97,41 +97,27 @@ def update_sidebar(nav_html):
     link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
     href_val = f"/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
 
-    year_li = None
-    for li in root_ul.find_all("li", recursive=False):
-        if li.find("span", string=year_str):
-            year_li = li
-            break
+    def find_or_create(parent_ul, tag_name, tag_text):
+        for li in parent_ul.find_all("li", recursive=False):
+            span = li.find("span", class_="opener")
+            if span and span.text == tag_text:
+                return li
+        li = soup.new_tag("li")
+        span = soup.new_tag("span", **{"class": "opener"})
+        span.string = tag_text
+        ul = soup.new_tag("ul")
+        li.append(span)
+        li.append(ul)
+        parent_ul.append(li)
+        return li
 
-    if not year_li:
-        year_li = soup.new_tag("li")
-        year_span = soup.new_tag("span", **{"class": "opener"})
-        year_span.string = year_str
-        year_ul = soup.new_tag("ul")
-        year_li.append(year_span)
-        year_li.append(year_ul)
-        root_ul.append(year_li)
-    else:
-        year_ul = year_li.find("ul")
+    year_li = find_or_create(root_ul, "span", year_str)
+    year_ul = year_li.find("ul")
 
-    month_li = None
-    for li in year_ul.find_all("li", recursive=False):
-        if li.find("span", string=month_str):
-            month_li = li
-            break
+    month_li = find_or_create(year_ul, "span", month_str)
+    month_ul = month_li.find("ul")
 
-    if not month_li:
-        month_li = soup.new_tag("li")
-        month_span = soup.new_tag("span", **{"class": "opener"})
-        month_span.string = month_str
-        month_ul = soup.new_tag("ul")
-        month_li.append(month_span)
-        month_li.append(month_ul)
-        year_ul.append(month_li)
-    else:
-        month_ul = month_li.find("ul")
-
-    if not any(a for a in month_ul.find_all("a") if a.get("href") == href_val):
+    if not any(a.get("href") == href_val for a in month_ul.find_all("a")):
         new_li = soup.new_tag("li")
         new_a = soup.new_tag("a", href=href_val)
         new_a.string = link_text
