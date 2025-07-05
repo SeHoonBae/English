@@ -27,7 +27,7 @@ POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 # 문장 10세트(4줄 × 10개) 추출 함수
 def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
-        lines = [line.strip() for line in f if line.strip()]
+        lines = [line.rstrip() for line in f if line.strip()]
 
     entries = [lines[i:i+4] for i in range(0, len(lines), 4)]
     new_entries = []
@@ -191,7 +191,6 @@ def generate_new_index(entries):
     for section in new_soup.find_all("section"):
         main_inner.append(section)
 
-    # sidebar는 menu.html로 분리한 주석 include로 대체
     sidebar_div = soup.find("div", id="sidebar")
     if sidebar_div:
         new_sidebar = BeautifulSoup('<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>', "html.parser")
