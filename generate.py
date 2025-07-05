@@ -126,30 +126,74 @@ def generate_new_index(entries):
 # menu.html 생성
 
 def generate_menu_html():
-    if not os.path.exists(INDEX_FILE):
-        print("index.html not found!")
+    from bs4 import Tag
+
+    nav = BeautifulSoup(features="html.parser").new_tag("nav", id="menu")
+
+    # 헤더
+    header = BeautifulSoup(features="html.parser").new_tag("header", **{"class": "major"})
+    h2 = BeautifulSoup(features="html.parser").new_tag("h2")
+    h2.string = "Menu"
+    header.append(h2)
+    nav.append(header)
+
+    root_ul = BeautifulSoup(features="html.parser").new_tag("ul")
+
+    # Homepage
+    home_li = BeautifulSoup(features="html.parser").new_tag("li")
+    home_a = BeautifulSoup(features="html.parser").new_tag("a", href="/index.html")
+    home_a.string = "Homepage"
+    home_li.append(home_a)
+    root_ul.append(home_li)
+
+    # 날짜 경로 기준으로 탐색
+    if not os.path.exists(POSTS_DIR):
+        print("No posts directory found.")
         return
 
-    with open(INDEX_FILE, "r", encoding="utf-8") as f:
-        html = f.read()
+    for year in sorted(os.listdir(POSTS_DIR)):
+        year_path = os.path.join(POSTS_DIR, year)
+        if not os.path.isdir(year_path):
+            continue
 
-    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
-    nav_match = nav_pattern.search(html)
-    if not nav_match:
-        print("No <nav id=menu> found in index.html")
-        return
+        year_li = BeautifulSoup(features="html.parser").new_tag("li")
+        year_span = BeautifulSoup(features="html.parser").new_tag("span", **{"class": "opener"})
+        year_span.string = f"{year}년 모음"
+        year_ul = BeautifulSoup(features="html.parser").new_tag("ul")
 
-    updated_nav = nav_match.group(1)
+        for month in sorted(os.listdir(year_path)):
+            month_path = os.path.join(year_path, month)
+            if not os.path.isdir(month_path):
+                continue
+
+            month_li = BeautifulSoup(features="html.parser").new_tag("li")
+            month_span = BeautifulSoup(features="html.parser").new_tag("span", **{"class": "opener"})
+            month_span.string = f"{int(month):02d}월 모음"
+            month_ul = BeautifulSoup(features="html.parser").new_tag("ul")
+
+            for file in sorted(os.listdir(month_path)):
+                if file.endswith(".html"):
+                    day = file.split(".")[0].split("-")[-1]
+                    file_li = BeautifulSoup(features="html.parser").new_tag("li")
+                    file_a = BeautifulSoup(features="html.parser").new_tag("a", href=f"/posts/{year}/{month}/{file}")
+                    file_a.string = f"{month}월 {day}일 영어문장 10개"
+                    file_li.append(file_a)
+                    month_ul.append(file_li)
+
+            if month_ul.contents:
+                month_li.append(month_span)
+                month_li.append(month_ul)
+                year_ul.append(month_li)
+
+        if year_ul.contents:
+            year_li.append(year_span)
+            year_li.append(year_ul)
+            root_ul.append(year_li)
+
+    nav.append(root_ul)
+
     with open(MENU_FILE, "w", encoding="utf-8") as f:
-        f.write(updated_nav)
+        f.write(str(nav))
 
-    print("✅ menu.html 생성 완료")
+    print("✅ menu.html 갱신 완료")
 
-if __name__ == "__main__":
-    entries = get_10_unique_entries()
-    if len(entries) < 10:
-        print("Not enough unique entries found.")
-    else:
-        backup_index()
-        generate_new_index(entries)
-        generate_menu_html()
