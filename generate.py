@@ -121,8 +121,6 @@ def generate_new_index(entries):
 
 # menu.html 생성 (전체 자동 탐색 방식으로 교체)
 def generate_menu_html():
-    from bs4 import BeautifulSoup
-
     nav = BeautifulSoup(features="html.parser").new_tag("nav", id="menu")
     header = BeautifulSoup(features="html.parser").new_tag("header", **{"class": "major"})
     h2 = BeautifulSoup(features="html.parser").new_tag("h2")
@@ -163,10 +161,11 @@ def generate_menu_html():
 
             for file in sorted(os.listdir(month_path)):
                 if file.endswith(".html"):
-                    day = file.split(".")[0].split("-")[-1]
+                    date_part = file.split(".")[0]  # YYYY-MM-DD
+                    _, m, d = date_part.split("-")
                     file_li = BeautifulSoup(features="html.parser").new_tag("li")
                     file_a = BeautifulSoup(features="html.parser").new_tag("a", href=f"/posts/{year}/{month}/{file}")
-                    file_a.string = f"{month}월 {day}일 영어문장 10개"
+                    file_a.string = f"{m}월 {d}일 영어문장 10개"
                     file_li.append(file_a)
                     month_ul.append(file_li)
 
