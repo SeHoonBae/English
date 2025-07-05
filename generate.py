@@ -123,30 +123,24 @@ def generate_new_index(entries):
 
     print("✅ index.html 업데이트 완료")
 
-# menu.html 생성
-
+# menu.html 생성 (전체 자동 탐색 방식으로 교체)
 def generate_menu_html():
-    from bs4 import Tag
+    from bs4 import BeautifulSoup
 
     nav = BeautifulSoup(features="html.parser").new_tag("nav", id="menu")
-
-    # 헤더
     header = BeautifulSoup(features="html.parser").new_tag("header", **{"class": "major"})
     h2 = BeautifulSoup(features="html.parser").new_tag("h2")
     h2.string = "Menu"
     header.append(h2)
     nav.append(header)
-
     root_ul = BeautifulSoup(features="html.parser").new_tag("ul")
 
-    # Homepage
     home_li = BeautifulSoup(features="html.parser").new_tag("li")
     home_a = BeautifulSoup(features="html.parser").new_tag("a", href="/index.html")
     home_a.string = "Homepage"
     home_li.append(home_a)
     root_ul.append(home_li)
 
-    # 날짜 경로 기준으로 탐색
     if not os.path.exists(POSTS_DIR):
         print("No posts directory found.")
         return
@@ -197,3 +191,11 @@ def generate_menu_html():
 
     print("✅ menu.html 갱신 완료")
 
+if __name__ == "__main__":
+    entries = get_10_unique_entries()
+    if len(entries) < 10:
+        print("Not enough unique entries found.")
+    else:
+        backup_index()
+        generate_new_index(entries)
+        generate_menu_html()
