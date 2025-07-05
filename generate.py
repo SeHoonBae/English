@@ -32,7 +32,7 @@ def get_10_unique_entries():
     raw_blocks = raw.strip().split("\n\n")
     blocks = []
     for block in raw_blocks:
-        lines = block.splitlines()
+        lines = block.strip().splitlines()
         if len(lines) == 3:
             blocks.append(lines)
 
@@ -49,9 +49,101 @@ def get_10_unique_entries():
 
     return selected
 
+# index.html 백업
+
+def backup_index():
+    if not os.path.exists(INDEX_FILE):
+        print("index.html not found!")
+        return
+
+    os.makedirs(POST_FOLDER, exist_ok=True)
+
+    with open(INDEX_FILE, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    html = html.replace("href=\"assets/", "href=\"/assets/")
+    html = html.replace("src=\"assets/", "src=\"/assets/")
+
+    soup = BeautifulSoup(html, "html.parser")
+    menu_include = soup.new_tag("div", id="sidebar")
+    inner_div = soup.new_tag("div", **{"class": "inner"})
+    comment = soup.new_string("#include virtual=\"/menu.html\" ", Comment)
+    inner_div.append(comment)
+    menu_include.append(inner_div)
+
+    sidebar_div = soup.find("div", id="sidebar")
+    if sidebar_div:
+        sidebar_div.replace_with(menu_include)
+
+    with open(POST_PATH, "w", encoding="utf-8") as f:
+        f.write(str(soup))
+
+    print(f"✅ index.html 백업 완료: {POST_PATH}")
+
+# index.html 갱신
+
+def generate_new_index(entries):
+    with open(INDEX_FILE, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    soup = BeautifulSoup(html, "html.parser")
+    main_inner = soup.select_one("div#main > div.inner")
+    if not main_inner:
+        print("Cannot find main > inner block")
+        return
+
+    banner = main_inner.find("section", id="banner")
+    if banner:
+        for sibling in list(banner.find_next_siblings("section")):
+            sibling.decompose()
+
+    for i, entry in enumerate(entries):
+        block = BeautifulSoup(f'''
+<section>
+  <div class="features">
+    <article>
+      <div class="content">
+        <h2>{i+1}. {entry[0]}</h2>
+        <h2>{entry[1]}</h2>
+        <h3>{entry[2]}</h3>
+      </div>
+    </article>
+  </div>
+</section>
+''', "html.parser")
+        main_inner.append(block)
+
+    sidebar_div = soup.find("div", id="sidebar")
+    if sidebar_div:
+        new_sidebar = BeautifulSoup('<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>', "html.parser")
+        sidebar_div.replace_with(new_sidebar)
+
+    with open(INDEX_FILE, "w", encoding="utf-8") as f:
+        f.write(str(soup.prettify(formatter="html")))
+
+    print("✅ index.html 업데이트 완료")
+
 # menu.html 생성
-# (이하 기존 코드와 동일 - 생략)
-# ...
+
+def generate_menu_html():
+    if not os.path.exists(INDEX_FILE):
+        print("index.html not found!")
+        return
+
+    with open(INDEX_FILE, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
+    nav_match = nav_pattern.search(html)
+    if not nav_match:
+        print("No <nav id=menu> found in index.html")
+        return
+
+    updated_nav = nav_match.group(1)
+    with open(MENU_FILE, "w", encoding="utf-8") as f:
+        f.write(updated_nav)
+
+    print("✅ menu.html 생성 완료")
 
 if __name__ == "__main__":
     entries = get_10_unique_entries()
