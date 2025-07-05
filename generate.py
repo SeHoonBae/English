@@ -11,10 +11,11 @@ INDEX_FILE = os.path.join(BASE_DIR, "index.html")
 MENU_FILE = os.path.join(BASE_DIR, "menu.html")
 POSTS_DIR = os.path.join(BASE_DIR, "posts")
 
-# 날짜 처리
+# 오늘과 어제 날짜 계산 (기준: KST)
 now = datetime.utcnow() + timedelta(hours=9)
 yesterday = now - timedelta(days=1)
 
+# 날짜 포맷
 TODAY = now.strftime("%Y-%m-%d")
 YESTERDAY = yesterday.strftime("%Y-%m-%d")
 POST_YEAR = yesterday.strftime("%Y")
@@ -23,21 +24,21 @@ POST_DAY = yesterday.strftime("%d")
 POST_FOLDER = os.path.join(POSTS_DIR, POST_YEAR, POST_MONTH)
 POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 
-# 문장 10세트(4줄) 추출
+# 문장 10세트(4줄 × 10개) 추출 함수
 def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
-        blocks = [b.strip().splitlines() for b in f.read().strip().split("\n\n")]
+        raw = f.read()
 
-    entries = [b for b in blocks if len(b) == 4]
-    if len(entries) < 10:
+    blocks = [block.strip().splitlines() for block in raw.strip().split("\n\n") if len(block.strip().splitlines()) == 4]
+    if len(blocks) < 10:
         return []
 
-    selected = entries[:10]
-    remaining = entries[10:]
+    selected = blocks[:10]
+    remaining = blocks[10:]
 
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
-        for entry in remaining:
-            f.write("\n".join(entry) + "\n\n")
+        for block in remaining:
+            f.write("\n".join(block) + "\n\n")
 
     return selected
 
@@ -51,12 +52,12 @@ def generate_menu_html():
         updated_nav = update_sidebar(nav_match.group(1))
         with open(MENU_FILE, "w", encoding="utf-8") as f:
             f.write(updated_nav)
-        print("✅ menu.html 생성 완료")
+        print("Generated separate menu.html file.")
 
-# 백업 index → posts/YYYY/MM/YYYY-MM-DD.html
+# 백업 파일 생성
 def backup_index():
     if not os.path.exists(INDEX_FILE):
-        print("⚠️ index.html 없음")
+        print("index.html not found!")
         return
 
     os.makedirs(POST_FOLDER, exist_ok=True)
@@ -68,22 +69,22 @@ def backup_index():
     html = html.replace("src=\"assets/", "src=\"/assets/")
 
     soup = BeautifulSoup(html, "html.parser")
+    menu_include = soup.new_tag("div", id="sidebar")
+    inner_div = soup.new_tag("div", **{"class": "inner"})
+    comment = soup.new_string("#include virtual=\"/menu.html\" ", Comment)
+    inner_div.append(comment)
+    menu_include.append(inner_div)
 
-    # 메뉴 include로 교체
     sidebar_div = soup.find("div", id="sidebar")
     if sidebar_div:
-        new_sidebar = BeautifulSoup(
-            '<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>',
-            "html.parser"
-        )
-        sidebar_div.replace_with(new_sidebar)
+        sidebar_div.replace_with(menu_include)
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(str(soup))
 
-    print(f"✅ index 백업 생성: {POST_PATH}")
+    print(f"Backed up index.html to {POST_PATH}")
 
-# section 생성
+# 새 섹션 블록 생성
 def build_sections(entries):
     blocks = []
     for i, entry in enumerate(entries):
@@ -101,7 +102,7 @@ def build_sections(entries):
 </section>''')
     return '\n'.join(blocks)
 
-# sidebar nav 갱신
+# 메뉴 업데이트
 def update_sidebar(nav_html):
     soup = BeautifulSoup(nav_html, "html.parser")
     root_ul = soup.find("ul")
@@ -113,34 +114,34 @@ def update_sidebar(nav_html):
     link_text = f"{POST_MONTH}월 {POST_DAY}일 영어문장 10개"
     href_val = f"/posts/{POST_YEAR}/{POST_MONTH}/{YESTERDAY}.html"
 
-    def find_li(ul, text):
-        for li in ul.find_all("li", recursive=False):
+    def find_existing_li(ul_tag, target_text):
+        for li in ul_tag.find_all("li", recursive=False):
             span = li.find("span", class_="opener")
-            if span and span.text.strip() == text:
+            if span and span.text.strip() == target_text:
                 return li
         return None
 
-    year_li = find_li(root_ul, year_str)
+    year_li = find_existing_li(root_ul, year_str)
     if not year_li:
         year_li = soup.new_tag("li")
-        span = soup.new_tag("span", **{"class": "opener"})
-        span.string = year_str
-        sub_ul = soup.new_tag("ul")
-        year_li.append(span)
-        year_li.append(sub_ul)
+        year_span = soup.new_tag("span", **{"class": "opener"})
+        year_span.string = year_str
+        year_ul = soup.new_tag("ul")
+        year_li.append(year_span)
+        year_li.append(year_ul)
         root_ul.append(year_li)
     else:
-        sub_ul = year_li.find("ul")
+        year_ul = year_li.find("ul")
 
-    month_li = find_li(sub_ul, month_str)
+    month_li = find_existing_li(year_ul, month_str)
     if not month_li:
         month_li = soup.new_tag("li")
-        span = soup.new_tag("span", **{"class": "opener"})
-        span.string = month_str
+        month_span = soup.new_tag("span", **{"class": "opener"})
+        month_span.string = month_str
         month_ul = soup.new_tag("ul")
-        month_li.append(span)
+        month_li.append(month_span)
         month_li.append(month_ul)
-        sub_ul.append(month_li)
+        year_ul.append(month_li)
     else:
         month_ul = month_li.find("ul")
 
@@ -153,12 +154,13 @@ def update_sidebar(nav_html):
 
     return str(soup.find("nav", id="menu"))
 
-# index.html 갱신
+# index.html 생성
 def generate_new_index(entries):
     with open(INDEX_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    nav_match = re.search(r'(<nav id="menu">.*?</nav>)', html, re.DOTALL)
+    nav_pattern = re.compile(r'(<nav id="menu">.*?</nav>)', re.DOTALL)
+    nav_match = nav_pattern.search(html)
     if nav_match:
         updated_nav = update_sidebar(nav_match.group(1))
         html = html.replace(nav_match.group(1), updated_nav)
@@ -166,7 +168,7 @@ def generate_new_index(entries):
     soup = BeautifulSoup(html, "html.parser")
     main_inner = soup.select_one("div#main > div.inner")
     if not main_inner:
-        print("❌ main.inner 찾기 실패")
+        print("Cannot find main > inner block")
         return
 
     banner = main_inner.find("section", id="banner")
@@ -181,23 +183,19 @@ def generate_new_index(entries):
 
     sidebar_div = soup.find("div", id="sidebar")
     if sidebar_div:
-        new_sidebar = BeautifulSoup(
-            '<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>',
-            "html.parser"
-        )
+        new_sidebar = BeautifulSoup('<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>', "html.parser")
         sidebar_div.replace_with(new_sidebar)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(str(soup.prettify(formatter="html")))
 
-    print("✅ index.html 갱신 완료")
+    print("New index.html created with updated <section> blocks and sidebar include.")
 
-# 실행
 if __name__ == "__main__":
     entries = get_10_unique_entries()
     if len(entries) < 10:
-        print("⚠️ 문장이 10세트 미만입니다.")
+        print("Not enough unique entries found.")
     else:
-        generate_new_index(entries)   # 먼저 index 갱신
-        backup_index()               # 이후 백업 파일 생성
-        generate_menu_html()        # 마지막에 메뉴 따로 생성
+        generate_new_index(entries)
+        backup_index()
+        generate_menu_html()
