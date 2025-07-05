@@ -27,30 +27,24 @@ POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 # 문장 10세트(4줄 × 10개) 추출 함수
 def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
-        lines = [line.rstrip() for line in f if line.strip()]
+        raw_text = f.read()
 
-    entries = [lines[i:i+4] for i in range(0, len(lines), 4)]
-    new_entries = []
-    used_set = set()
-
-    for entry in entries:
-        key = tuple(entry)
-        if key not in used_set:
-            new_entries.append(entry)
-            used_set.add(key)
-        if len(new_entries) == 10:
-            break
+    blocks = [block.strip().splitlines() for block in raw_text.strip().split("\n\n")]
+    entries = [block for block in blocks if len(block) == 4]
+    new_entries = entries[:10]
 
     if len(new_entries) < 10:
         return []
 
-    # 사용된 entry만 제거하고 나머지 다시 기록
+    remaining_entries = entries[10:]
+
+    # 다시 파일에 저장
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
-        for entry in entries:
-            if tuple(entry) not in used_set:
-                f.write('\n'.join(entry) + '\n\n')
+        for entry in remaining_entries:
+            f.write("\n".join(entry) + "\n\n")
 
     return new_entries
+
 
 # menu.html 생성
 def generate_menu_html():
