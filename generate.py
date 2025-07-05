@@ -24,28 +24,28 @@ POST_DAY = yesterday.strftime("%d")
 POST_FOLDER = os.path.join(POSTS_DIR, POST_YEAR, POST_MONTH)
 POST_PATH = os.path.join(POST_FOLDER, f"{YESTERDAY}.html")
 
-# 문장 10세트(3줄 + 빈줄 × 10개) 추출 함수
+# 문장 10세트(3줄 + 빈줄 포함된 블록 × 10개) 추출 함수
 def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
-        raw = f.read()
+        content = f.read()
 
-    raw_blocks = raw.strip().split("\n\n")
+    raw_blocks = content.strip().split("\n\n")
     blocks = []
     for block in raw_blocks:
         lines = block.strip().splitlines()
-        if len(lines) == 3:
-            blocks.append(lines)
+        if len(lines) >= 3:
+            blocks.append(lines[:3])
 
     if len(blocks) < 10:
         print(f"❌ 유효한 문장 블록이 10개 미만입니다. 현재 {len(blocks)}개입니다.")
         return []
 
     selected = blocks[:10]
-    remaining = blocks[10:]
+    remaining_blocks = raw_blocks[10:]
 
     with open(TEXT_FILE, "w", encoding="utf-8") as f:
-        for block in remaining:
-            f.write("\n".join(block) + "\n\n")
+        for block in remaining_blocks:
+            f.write(block.strip() + "\n\n")
 
     return selected
 
