@@ -65,15 +65,11 @@ def backup_index():
     html = html.replace("src=\"assets/", "src=\"/assets/")
 
     soup = BeautifulSoup(html, "html.parser")
-    menu_include = soup.new_tag("div", id="sidebar")
-    inner_div = soup.new_tag("div", **{"class": "inner"})
-    comment = soup.new_string("#include virtual=\"/menu.html\" ", Comment)
-    inner_div.append(comment)
-    menu_include.append(inner_div)
-
     sidebar_div = soup.find("div", id="sidebar")
     if sidebar_div:
-        sidebar_div.replace_with(menu_include)
+        inner_div = soup.new_tag("div", **{"class": "inner", "id": "sidebar-menu"})
+        sidebar_div.clear()
+        sidebar_div.append(inner_div)
 
     with open(POST_PATH, "w", encoding="utf-8") as f:
         f.write(str(soup))
@@ -115,7 +111,7 @@ def generate_new_index(entries):
 
     sidebar_div = soup.find("div", id="sidebar")
     if sidebar_div:
-        new_sidebar = BeautifulSoup('<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>', "html.parser")
+        new_sidebar = BeautifulSoup('<div id="sidebar"><div class="inner" id="sidebar-menu"></div></div>', "html.parser")
         sidebar_div.replace_with(new_sidebar)
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
