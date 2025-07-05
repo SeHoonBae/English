@@ -31,6 +31,7 @@ def get_10_unique_entries():
 
     blocks = [block.strip().splitlines() for block in raw.strip().split("\n\n") if len(block.strip().splitlines()) == 4]
     if len(blocks) < 10:
+        print(f"❌ 유효한 4줄 블록이 10개 미만입니다. 현재 {len(blocks)}개입니다.")
         return []
 
     selected = blocks[:10]
@@ -196,6 +197,6 @@ if __name__ == "__main__":
     if len(entries) < 10:
         print("Not enough unique entries found.")
     else:
-        generate_new_index(entries)
         backup_index()
+        generate_new_index(entries)
         generate_menu_html()
