@@ -29,9 +29,16 @@ def get_10_unique_entries():
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
         raw = f.read()
 
-    blocks = [block.strip().splitlines() for block in raw.strip().split("\n\n") if len(block.strip().splitlines()) == 4]
+    # 빈 줄 1개를 기준으로 블록을 나눈다
+    raw_blocks = raw.strip().split("\n\n")
+    blocks = []
+    for block in raw_blocks:
+        lines = block.splitlines()
+        if len(lines) == 4 or (len(lines) == 3 and lines[-1].strip() == ""):
+            blocks.append(lines[:3])  # 앞 3줄만 사용
+
     if len(blocks) < 10:
-        print(f"❌ 유효한 4줄 블록이 10개 미만입니다. 현재 {len(blocks)}개입니다.")
+        print(f"❌ 유효한 문장 블록이 10개 미만입니다. 현재 {len(blocks)}개입니다.")
         return []
 
     selected = blocks[:10]
@@ -42,6 +49,7 @@ def get_10_unique_entries():
             f.write("\n".join(block) + "\n\n")
 
     return selected
+
 
 # menu.html 생성
 def generate_menu_html():
