@@ -243,7 +243,11 @@
 </div>
 </div>
 <!-- Sidebar -->
-<div id="sidebar"><div class="inner"><!--#include virtual="/menu.html" --></div></div>
+<div id="sidebar">
+	<div class="inner" id="sidebar-menu">
+	  <!-- menu.html이 여기에 동적으로 삽입됨 -->
+	</div>
+</div>
 </div>
 <!-- Scripts -->
 <script src="/assets/js/jquery.min.js">
@@ -258,7 +262,8 @@
 </script>
 </body>
 </html>
-<script>
+<!-- Sidebar Menu Load Script -->
+    <script>
       fetch("/menu.html")
         .then(response => response.text())
         .then(data => {
