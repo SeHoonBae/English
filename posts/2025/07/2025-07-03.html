@@ -259,26 +259,33 @@
   </script>
  </body>
 </html>
+<!-- Sidebar Menu Load Script -->
 <script>
- document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("span.opener").forEach(function (el) {
-      el.addEventListener("click", function () {
-        const target = el.nextElementSibling;
-        if (!target || !target.classList.contains("active-opener")) {
-          // 펼치기
-          target?.classList.add("active-opener");
-          target?.style.setProperty("display", "block");
-        } else {
-          // 접기
-          target.classList.remove("active-opener");
-          target.style.setProperty("display", "none");
-        }
-      });
-    });
+ fetch("/menu.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("sidebar-menu").innerHTML = data;
 
-    // 초기 모든 하위 opener 닫기
-    document.querySelectorAll("span.opener + ul").forEach(function (ul) {
-      ul.style.setProperty("display", "none");
-    });
-  });
+          // opener 메뉴 클릭 이벤트 재적용
+          document.querySelectorAll("span.opener").forEach(function (el) {
+            el.addEventListener("click", function () {
+              const target = el.nextElementSibling;
+              if (!target || !target.classList.contains("active-opener")) {
+                target?.classList.add("active-opener");
+                target?.style.setProperty("display", "block");
+              } else {
+                target.classList.remove("active-opener");
+                target.style.setProperty("display", "none");
+              }
+            });
+          });
+
+          // 초기 모든 하위 opener 닫기
+          document.querySelectorAll("span.opener + ul").forEach(function (ul) {
+            ul.style.setProperty("display", "none");
+          });
+        })
+        .catch(error => {
+          console.error("menu.html 로드 실패:", error);
+        });
 </script>
