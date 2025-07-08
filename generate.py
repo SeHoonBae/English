@@ -180,6 +180,23 @@ def generate_menu_html():
             root_ul.append(year_li)
 
     nav.append(root_ul)
+        # 추가: 연락처 및 광고 섹션
+    contact_section = BeautifulSoup('''
+<section>
+  <header class="major">
+    <h2>Get in touch</h2>
+  </header>
+  <ul class="contact">
+    <li class="icon solid fa-envelope"><a href="#">cashcow1548@gmail.com</a></li>
+    <li class="icon solid fa-youtube"><a href="https://www.youtube.com/@practice_English_Conversation">youtube로 이동</a></li>
+  </ul>
+</section>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4716885238797088"
+     crossorigin="anonymous"></script>
+''', "html.parser")
+
+    nav.append(contact_section)
+
 
     with open(MENU_FILE, "w", encoding="utf-8") as f:
         f.write(str(nav))
