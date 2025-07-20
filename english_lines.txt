@@ -1,43 +1,3 @@
-What is your favorite food?
-당신이 가장 좋아하는 음식은 무엇인가요?
-왓 이즈 유어 페이버릿 푸드?
-
-What's one thing you're really good at?
-당신이 정말 잘하는 한 가지는 무엇인가요?
-왓츠 원 띵 유어 리얼리 굿 앳?
-
-Why are you awake right now?
-지금 왜 깨어 있나요?
-와이 아 유 어웨이크 라잇 나우?
-
-What is the worst thing happened in your life?
-당신 인생에서 일어난 가장 끔찍한 일은 무엇이었나요?
-왓 이즈 더 워스트 띵 해픈드 인 유어 라이프?
-
-What's your goal in life?
-당신의 인생 목표는 무엇인가요?
-왓츠 유어 골 인 라이프?
-
-If you had to get a tramp stamp, what would you get?
-꼭 하체 타투(트램프 스탬프)를 해야 한다면 어떤 문신을 하시겠어요?
-이프 유 해드 투 겟 어 트램프 스탬프, 왓 우드 유 겟?
-
-What are your goals for the 2nd half of the year?
-올해 하반기 목표는 무엇인가요?
-왓 아 유어 골즈 포 더 세컨드 하프 오브 더 이어?
-
-What do you enjoy most about having an imagination?
-상상력을 가짐으로써 가장 즐기는 점은 무엇인가요?
-왓 두 유 인조이 모스트 어바웃 해빙 언 이매지네이션?
-
-What is your best advice for dating?
-연애에 대한 최고의 조언은 무엇인가요?
-왓 이즈 유어 베스트 어드바이스 포 데이팅?
-
-What is your ultimate fantasy?
-당신의 궁극적인 판타지는 무엇인가요?
-왓 이즈 유어 얼티밋 판터지?
-
 What's better a lake beach or an ocean beach?
 호숫가 해변과 바닷가 해변 중 어느 쪽이 더 좋나요?
 왓츠 베러 어 레이크 비치 오어 언 오션 비치?
@@ -769,3 +729,4 @@ What book was done dirty by the movie?
 How do you stop waiting to die?
 죽기만을 기다리는 마음을 어떻게 멈추나요?
 하우 두 유 스탑 웨이팅 투 다이?
+
