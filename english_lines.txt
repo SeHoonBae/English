@@ -1,43 +1,3 @@
-TV show/Movie answers only, how old are you?
-TV나 영화 제목으로 대답해주세요, 당신의 나이는?
-티비 쇼/무비 앤서스 온리, 하우 올드 아 유?
-
-What's your dream in life?
-당신의 인생 꿈은 무엇인가요?
-왓츠 유어 드림 인 라이프?
-
-What do you need right now?
-지금 당장 필요한 것은 무엇인가요?
-왓 두 유 니드 라잇 나우?
-
-What celebrity death never sat right with you?
-당신에게 계속 찜찜하게 남은 유명인의 죽음은 누구였나요?
-왓 셀러브리티 데스 네버 샛 라잇 위드 유?
-
-How important is foreplay to you?
-당신에게 전희는 얼마나 중요한가요?
-하우 임포턴트 이즈 포어플레이 투 유?
-
-What is one time you were trapped badly?
-당신이 정말 심하게 갇혔던 적은 언제였나요?
-왓 이즈 원 타임 유 워 트랩트 배들리?
-
-What's a sign you're about to get some bad news?
-나쁜 소식을 곧 듣게 될 때의 신호는 무엇인가요?
-왓츠 어 사인 유어 어바웃 투 겟 썸 배드 뉴스?
-
-What are the signs that a person is superficial?
-사람이 겉만 보는 성격이라는 신호는 무엇인가요?
-왓 아 더 사인즈 댓 어 퍼슨 이즈 수퍼피셜?
-
-What is the dumbest decision you've ever made?
-당신이 한 일 중 가장 멍청했던 결정은 무엇이었나요?
-왓 이즈 더 덤베스트 디시전 유브 에버 메이드?
-
-What’s the most commonly misused word in English?
-영어에서 가장 자주 오용되는 단어는 무엇인가요?
-왓츠 더 모스트 커먼리 미스유즈드 워드 인 잉글리쉬?
-
 What is love to you?
 당신에게 사랑이란 무엇인가요?
 왓 이즈 러브 투 유?
@@ -429,3 +389,4 @@ What is the weirdest thing that gets you angry?
 Who’s your fav NBA player OAT?
 역대 가장 좋아하는 NBA 선수는 누구예요?
 후즈 유어 페이브 엔비에이 플레이어 오에이티?
+
