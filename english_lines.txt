@@ -1,43 +1,3 @@
-How old do you want to live to?
-몇 살까지 살고 싶으신가요?
-하우 올드 두 유 원트 투 리브 투?
-
-What does emotional exhaustion feel like to you?
-감정적으로 탈진한 느낌은 당신에게 어떤가요?
-왓 더즈 이모셔널 이그저스천 필 라이크 투 유?
-
-What’s a lie you used to believe about adulthood?
-어른이 되는 것에 대해 예전엔 믿었던 거짓말은 무엇인가요?
-왓츠 어 라이 유 유즈드 투 빌리브 어바웃 어덜트후드?
-
-What lyric from a song hit you the hardest?
-노래 가사 중에서 가장 가슴을 때렸던 한 줄은 무엇인가요?
-왓 리릭 프럼 어 송 힛 유 더 하디스트?
-
-What’s something you’re embarrassingly bad at?
-당신이 부끄러울 정도로 못하는 것은 무엇인가요?
-왓츠 썸띵 유어 엠배러싱리 배드 앳?
-
-What is your first phone?
-당신의 첫 휴대폰은 무엇이었나요?
-왓 이즈 유어 퍼스트 폰?
-
-Do you actually hate being tickled and why?
-간지럼 타는 걸 진짜 싫어하나요? 왜요?
-두 유 액츄얼리 헤이트 빙 티클드 앤 와이?
-
-Why are you not working?
-지금 일을 안 하는 이유는 무엇인가요?
-와이 아 유 낫 워킹?
-
-What food are you gonna cook for dinner?
-오늘 저녁으로 어떤 음식을 요리할 예정인가요?
-왓 푸드 아 유 거너 쿡 포 디너?
-
-What do you think about rebirth?
-환생에 대해 어떻게 생각하시나요?
-왓 두 유 띵크 어바웃 리버스?
-
 Why did you quit your last job?
 이전 직장을 그만둔 이유는 무엇이었나요?
 와이 디드 유 퀏 유어 라스트 잡?
@@ -409,3 +369,4 @@ What boring thing are you really good at?
 What’s your favorite Ozzy/Black Sabbath album?
 가장 좋아하는 오지/블랙 사바스 앨범은 무엇인가요?
 왓츠 유어 페이버릿 오지/블랙 새버쓰 앨범?
+
