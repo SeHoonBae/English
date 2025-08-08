@@ -1,43 +1,3 @@
-What helps you survive the bad days?
-힘든 날을 버티게 해주는 것은 무엇인가요?
-왓 헬프스 유 서바이브 더 배드 데이즈?
-
-What book was done dirty by the movie?
-영화가 망쳐버린 책은 무엇인가요?
-왓 북 워즈 던 더티 바이 더 무비?
-
-How do you stop waiting to die?
-죽기만을 기다리는 마음을 어떻게 멈추나요?
-하우 두 유 스탑 웨이팅 투 다이?
-
-What's the sexiest song ever created?
-역대 가장 섹시하다고 생각되는 노래는 뭐예요?
-왓츠 더 섹시에스트 송 에버 크리에이티드?
-
-What gets easier with age?
-나이가 들수록 더 쉬워지는 건 뭐예요?
-왓 겟츠 이지어 윗 에이지?
-
-What sexual superpower would you like?
-가질 수 있다면 어떤 성적 초능력을 원하세요?
-왓 섹슈얼 수퍼파워 우드 유 라이크?
-
-As a MAN, What scares you the MOST?
-남자로서 가장 두려운 건 뭐예요?
-애즈 어 맨, 왓 스케어즈 유 더 모스트?
-
-What's a sign you're officially getting old?
-공식적으로 늙어간다는 신호는 뭐라고 생각하세요?
-왓츠 어 싸인 유어 어피셜리 게팅 올드?
-
-What are you proud of yourself for doing?
-자신이 해낸 일 중에서 자랑스러운 건 뭐예요?
-왓 아 유 프라우드 오브 유어셀프 포 두잉?
-
-Why do you do or do not sleep with socks on?
-왜 양말을 신고 자거나 벗고 자나요?
-와이 두 유 두 오어 두 낫 슬립 윗 삭스 온?
-
 What are the benefits of being stupid?
 멍청하면 좋은 점은 뭐가 있을까요?
 왓 아 더 베너핏츠 오브 빙 스투피드?
@@ -549,3 +509,4 @@ What’s the dumbest thing you believed as a kid?
 How are you today on a scale of ten?
 오늘 기분을 1부터 10까지 점수로 표현하면 몇 점인가요?
 하우 아 유 투데이 온 어 스케일 오브 텐?
+
