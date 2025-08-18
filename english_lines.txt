@@ -1,43 +1,3 @@
-What's your favorite hobbie or activity?
-가장 좋아하는 취미나 활동은 뭐예요?
-왓츠 유어 페이보릿 하비 오어 액티비티?
-
-What ruins a pizza?
-피자를 망치는 건 뭐예요?
-왓 루인즈 어 피자?
-
-What time do you consider evening to start at?
-당신이 생각하는 저녁 시간의 시작은 몇 시인가요?
-왓 타임 두 유 컨시더 이브닝 투 스타트 앳?
-
-How can people stop from assuming the worst?
-사람들이 최악을 가정하지 않으려면 어떻게 해야 할까요?
-하우 캔 피플 스탑 프럼 어쥬밍 더 워스트?
-
-What is stressing you out today?
-오늘 당신을 스트레스 받게 하는 건 뭐예요?
-왓 이즈 스트레싱 유 아웃 투데이?
-
-What is the most efficient way to ease despair?
-절망을 덜어내는 가장 효율적인 방법은 뭐예요?
-왓 이즈 더 모스트 이피션트 웨이 투 이즈 디스페어?
-
-How old is your cellphone number?
-당신의 휴대폰 번호는 얼마나 오래됐나요?
-하우 올드 이즈 유어 셀폰 넘버?
-
-What’s something people get way too angry about?
-사람들이 지나치게 화내는 건 뭐가 있나요?
-왓츠 썸씽 피플 겟 웨이 투 앵그리 어바웃?
-
-What’s your hack to fall asleep quick?
-빨리 잠드는 당신만의 비결이 있나요?
-왓츠 유어 핵 투 폴 어슬립 퀵?
-
-What’s an album that’s unskippable?
-한 곡도 넘기지 않고 다 듣는 앨범은 뭐예요?
-왓츠 언 앨범 댓츠 언스키퍼블?
-
 What cartoon character do you relate to?
 가장 공감 가는 만화 캐릭터는 누구예요?
 왓 카툰 캐릭터 두 유 릴레이트 투?
@@ -261,3 +221,4 @@ What is your favorite Disney Movie?
 What’s your “I’m never doing that again” story?
 "나는 다시는 절대 안 한다"라고 다짐하게 된 당신의 이야기는 무엇인가요?
 왓츠 유어 아임 네버 두잉 댓 어겐 스토리?
+
