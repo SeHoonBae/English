@@ -1,43 +1,3 @@
-What celebrity is your physical “type”?
-당신의 외모상 이상형인 유명인은 누구인가요?
-왓 셀러브리티 이즈 유어 피지컬 타입?
-
-What are your pet peeves in a YouTuber?
-유튜버에게서 가장 싫어하는 행동은 무엇인가요?
-왓 아 유어 펫 피브즈 인 어 유튜버?
-
-What’s your biggest fear?
-당신의 가장 큰 두려움은 무엇인가요?
-왓츠 유어 비게스트 피어?
-
-Have you broken an addiction and how?
-중독을 끊어본 적이 있다면 어떻게 했나요?
-해브 유 브로큰 언 어딕션 앤 하우?
-
-What are the most oddly “gate kept” subs?
-이상하게도 비밀스럽게 지켜지는 서브레딧은 무엇인가요?
-왓 아 더 모스트 오들리 게이트 kept 섭스?
-
-What is everyone doing but no one admits it?
-모두가 하지만 아무도 인정하지 않는 것은 무엇인가요?
-왓 이즈 에브리원 두잉 벗 노 원 어밋싯?
-
-What is the best cereal of all time?
-역대 최고의 시리얼은 무엇인가요?
-왓 이즈 더 베스트 시리얼 오브 올 타임?
-
-How does one not feel like a worthless person?
-어떻게 하면 자신이 쓸모없는 사람처럼 느끼지 않을 수 있나요?
-하우 더즈 원 낫 필 라이크 어 월쓰리스 퍼슨?
-
-What type of people are just irresistible to you?
-당신에게 도저히 매력을 뿌리칠 수 없는 사람 유형은 무엇인가요?
-왓 타입 오브 피플 아 저스트 이리저스티블 투 유?
-
-What helps improve your quality of sleep?
-수면의 질을 향상시키는 데 도움이 되는 것은 무엇인가요?
-왓 헬프스 임프루브 유어 퀄리티 오브 슬립?
-
 How old do you feel compared to your actual age?
 실제 나이에 비해 몇 살처럼 느끼나요?
 하우 올드 두 유 필 컴페어드 투 유어 액추얼 에이지?
@@ -313,3 +273,4 @@ What is your favorite children’s book?
 What's your biggest fear so far?
 지금까지 당신의 가장 큰 두려움은 무엇인가요?
 왓츠 유어 비게스트 피어 소 파?
+
