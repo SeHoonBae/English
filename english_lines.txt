@@ -1,43 +1,3 @@
-What are you the most proud of?
-당신이 가장 자랑스러워하는 것은 무엇인가요?
-왓 아 유 더 모스트 프라우드 오브?
-
-Who do you miss the most?
-당신이 가장 그리워하는 사람은 누구인가요?
-후 두 유 미스 더 모스트?
-
-What will WW3 look like?
-제3차 세계대전은 어떤 모습일까요?
-왓 윌 더블유 더블유 쓰리 룩 라이크?
-
-How are you today?
-오늘 기분은 어때요?
-하우 아 유 투데이?
-
-What is your favorite cheap meal to make?
-만들기 좋아하는 저렴한 음식은 무엇인가요?
-왓 이즈 유어 페이버릿 칩 밀 투 메이크?
-
-What is your favorite moment from Reddit history?
-레딧 역사에서 가장 좋아하는 순간은 무엇인가요?
-왓 이즈 유어 페이버릿 모먼트 프럼 레딧 히스토리?
-
-What’s the most immoral thing you’ve done?
-당신이 한 가장 비도덕적인 일은 무엇인가요?
-왓츠 더 모스트 이모럴 씽 유브 던?
-
-What is your favorite children’s book?
-가장 좋아하는 어린이 책은 무엇인가요?
-왓 이즈 유어 페이버릿 칠드런스 북?
-
-What's your biggest fear so far?
-지금까지 당신의 가장 큰 두려움은 무엇인가요?
-왓츠 유어 비게스트 피어 소 파?
-
-What massively improved your mental health?
-당신의 정신 건강을 크게 개선시킨 것은 무엇인가요?
-왓 매시블리 임프루브드 유어 멘탈 헬스?
-
 What is the worst name you ever heard of?
 당신이 들어본 이름 중 가장 별로였던 것은 무엇인가요?
 왓 이즈 더 워스트 네임 유 에버 헐드 오브?
@@ -333,3 +293,4 @@ What do you live for?
 What is the best dark movie you ever seen?
 당신이 본 최고의 다크 무비는 무엇인가요?
 왓 이즈 더 베스트 다크 무비 유 에버 씬?
+
