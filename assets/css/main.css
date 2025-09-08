@@ -1932,6 +1932,15 @@ button,
   position: relative;
   width: 26em; 
 }
+
+#sidebar #sidebar-menu {
+  max-height: 100vh;      /* 화면 높이까지만 */
+  overflow-y: auto;       /* 세로 스크롤 */
+  overflow-x: hidden;     /* 가로는 숨김 (내용이 밀려도 가로 스크롤 방지) */
+  /* 선택: 스크롤바로 레이아웃 흔들림 방지 */
+  scrollbar-gutter: stable both-edges;
+}
+
   #sidebar h2 {
     font-size: 1.38889em; }
   #sidebar > .inner {
@@ -2050,24 +2059,27 @@ button,
       body.is-preload #sidebar {
         display: none; } }
   @media screen and (max-width: 736px) {
-    #sidebar .toggle {
-      text-indent: 7.25em;
-      width: 7.25em; }
-      #sidebar .toggle:before {
-        color: #7f888f;
-        margin-left: -0.0625em;
-        margin-top: -0.25em;
-        font-size: 1.1rem;
-        z-index: 1; }
-      #sidebar .toggle:after {
-        background: rgba(222, 225, 226, 0.75);
-        border-radius: 0.375em;
-        content: '';
-        height: 3.5em;
-        left: 1em;
-        position: absolute;
-        top: 1em;
-        width: 5em; } }
+  #sidebar .toggle {
+    position: fixed; 
+    left: 12px !important;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    top: auto;
+    width: 3.5rem; height: 3.5rem; line-height: 3.5rem;
+    text-indent: 0;
+    z-index: 2147483646;
+  }
+  #sidebar .toggle:before {
+    color: #7f888f;
+    font-size: 1.4rem;
+    display: block; text-align: center; line-height: 3.5rem;
+  }
+  #sidebar .toggle:after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(222,225,226,.9);
+    border-radius: .5rem;
+  }
+}
 
 /* Header */
 #header {
@@ -2271,5 +2283,6 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
 
 
