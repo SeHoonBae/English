@@ -1931,8 +1931,8 @@ button,
   font-size: 0.9em;
   position: relative;
   width: 26em; 
-  max-height: 100vh; /* 화면 높이만큼 제한 */
-  overflow-y: auto;  /* 세로 스크롤 자동 생성 */
+  max-height: 100vh;
+  overflow-y: auto;
 }
   #sidebar h2 {
     font-size: 1.38889em; }
@@ -2051,8 +2051,7 @@ button,
           margin-left: -0.4375em; }
       body.is-preload #sidebar {
         display: none; } }
-
-@media screen and (max-width: 736px) {
+  @media screen and (max-width: 736px) {
     #sidebar .toggle {
       text-indent: 7.25em;
       width: 7.25em; }
@@ -2071,7 +2070,6 @@ button,
         position: absolute;
         top: 1em;
         width: 5em; } }
-
 
 /* Header */
 #header {
@@ -2275,8 +2273,4 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
-
-
-
-
 
