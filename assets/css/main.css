@@ -1931,8 +1931,6 @@ button,
   font-size: 0.9em;
   position: relative;
   width: 26em; 
-  max-height: 100vh;
-  overflow-y: auto;
 }
   #sidebar h2 {
     font-size: 1.38889em; }
@@ -2273,4 +2271,5 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
 
