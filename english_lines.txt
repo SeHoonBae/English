@@ -1,43 +1,3 @@
-What actions in people make you dislike them?
-사람들의 어떤 행동이 당신을 싫게 만드나요?
-왓 액션즈 인 피플 메이크 유 디슬라이크 뎀?
-
-How do you remain positive about the future?
-당신은 어떻게 미래에 대해 긍정적으로 남을 수 있나요?
-하우 두 유 리메인 파지티브 어바웃 더 퓨처?
-
-What makes you a good human?
-당신을 좋은 사람으로 만드는 것은 무엇인가요?
-왓 메익스 유 어 굿 휴먼?
-
-What is your fav quote?
-당신이 가장 좋아하는 명언은 무엇인가요?
-왓 이즈 유어 페이브 쿼트?
-
-People who have fainted: what caused it?
-실신해 본 사람들, 그 원인은 무엇이었나요?
-피플 후 해브 페인티드: 왓 코즈드 잇?
-
-What’s a simple pleasure you think is underrated?
-당신이 생각하기에 과소평가된 소소한 즐거움은 무엇인가요?
-왓츠 어 심플 플레저 유 씽크 이즈 언더레이티드?
-
-What does society need to stop romanticizing?
-사회가 더 이상 미화하지 말아야 할 것은 무엇인가요?
-왓 더즈 소사이어티 니드 투 스탑 로맨터사이징?
-
-What do you like most about fast food?
-패스트푸드에서 당신이 가장 좋아하는 점은 무엇인가요?
-왓 두 유 라이크 모스트 어바웃 패스트 푸드?
-
-What’s the hardest you’ve failed on a test?
-시험에서 당신이 가장 심하게 실패했던 경험은 무엇인가요?
-왓츠 더 하디스트 유브 페일드 온 어 테스트?
-
-How do you stop people pleasing?
-남에게 잘 보이려는 습관을 어떻게 멈추나요?
-하우 두 유 스탑 피플 플리징?
-
 What is still troubling you to this day?
 오늘날까지 여전히 당신을 괴롭히는 것은 무엇인가요?
 왓 이즈 스틸 트러블링 유 투 디스 데이?
@@ -296,7 +256,7 @@ What job is 100% overpaid?
 
 What is the most wholesome kink you have?
 당신이 가진 가장 건전한(?) 성적 취향은 무엇인가요?
-왓 이즈 더 모스트 홀섬 킨크 유 해브?　
+왓 이즈 더 모스트 홀섬 킨크 유 해브?
 
 What is a green flag that you find unattractive?
 좋은 신호이긴 하지만 당신에게는 매력 없다고 느껴지는 것은 무엇인가요?
@@ -405,3 +365,4 @@ How did you come up with your username?
 What's your favorite comfort food?
 당신이 가장 좋아하는 위로 음식은 무엇인가요?
 왓츠 유어 페이버릿 컴포트 푸드?
+
