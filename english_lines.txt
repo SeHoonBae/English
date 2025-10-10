@@ -1,43 +1,3 @@
-How did you come up with your username?
-당신의 사용자 이름은 어떻게 만들었나요?
-하우 딛 유 컴 업 윗 유어 유저네임?
-
-What's your favorite comfort food?
-당신이 가장 좋아하는 위로 음식은 무엇인가요?
-왓츠 유어 페이버릿 컴포트 푸드?
-
-What’s the most overrated city in the world?
-세상에서 가장 과대평가된 도시는 어디인가요?
-왓츠 더 모스트 오버레이티드 시티 인 더 월드?
-
-What’s a sign you’re officially getting old?
-당신이 공식적으로 늙어가고 있다는 신호는 무엇인가요?
-왓츠 어 사인 유어 오피셜리 게팅 올드?
-
-What's a scam that most people still fall for?
-많은 사람들이 여전히 속는 사기는 무엇인가요?
-왓츠 어 스캠 댓 모스트 피플 스틸 폴 포?
-
-What has been your life altering experience?
-당신의 인생을 바꾼 경험은 무엇이었나요?
-왓 해즈 빈 유어 라이프 얼터링 익스피리언스?
-
-What is your most common thought?
-당신이 가장 자주 하는 생각은 무엇인가요?
-왓 이즈 유어 모스트 커먼 쏫?
-
-What’s the weirdest thing that turns you on?
-당신을 이상하게 흥분시키는 가장 특이한 것은 무엇인가요?
-왓츠 더 위어디스트 씽 댓 턴즈 유 온?
-
-What makes a bad kisser?
-나쁜 키스 상대를 만드는 것은 무엇인가요?
-왓 메익스 어 배드 키서?
-
-Which song basically sums up your life?
-당신의 삶을 요약하는 노래는 무엇인가요?
-위치 송 베이시컬리 섬즈 업 유어 라이프?
-
 What do you miss the most about being a teenager?
 십대 시절 가장 그리운 것은 무엇인가요?
 왓 두 유 미스 더 모스트 어바웃 비잉 어 티네이저?
@@ -309,3 +269,4 @@ Do you prefer winter or summer and why?
 What old adages do you find laughably wrong?
 당신이 웃길 정도로 틀렸다고 생각하는 옛 격언은 무엇인가요?
 왓 올드 애디지즈 두 유 파인드 래퍼블리 롱?
+
