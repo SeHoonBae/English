@@ -1,43 +1,3 @@
-What is your favorite type of food?
-당신이 가장 좋아하는 음식 종류는 무엇인가요?
-왓 이즈 유어 페이버릿 타입 오브 푸드?
-
-What's keeping you up right now?
-지금 당신을 잠 못 들게 하는 건 무엇인가요?
-왓츠 키핑 유 업 라잇 나우?
-
-What is your idea of bravery?
-당신이 생각하는 용기의 정의는 무엇인가요?
-왓 이즈 유어 아이디어 오브 브레이버리?
-
-What are the things you do for love?
-사랑을 위해 당신이 하는 일들은 무엇인가요?
-왓 아 더 띵즈 유 두 포 러브?
-
-What's your saddest memory?
-당신의 가장 슬픈 기억은 무엇인가요?
-왓츠 유어 새디스트 메모리?
-
-What is the biggest reason for you to live?
-당신이 살아가는 가장 큰 이유는 무엇인가요?
-왓 이즈 더 비게스트 리즌 포 유 투 리브?
-
-What's your most viewed Reddit post?
-당신이 올린 게시물 중 가장 조회수가 높은 것은 무엇인가요?
-왓츠 유어 모스트 뷰드 레딧 포스트?
-
-What’s the longest relationship you’ve ever had?
-당신이 경험한 가장 긴 연애는 얼마나 되었나요?
-왓츠 더 롱게스트 릴레이션십 유브 에버 해드?
-
-People who want kids, why?
-아이를 원하는 사람들, 이유가 무엇인가요?
-피플 후 원트 키즈, 와이?
-
-What current technology do you refuse to use?
-당신이 사용을 거부하는 최신 기술은 무엇인가요?
-왓 커런트 테크놀로지 두 유 리퓨즈 투 유즈?
-
 What are some migraine remedies?
 편두통에 도움이 되는 방법은 어떤 게 있나요?
 왓 아 썸 마이그레인 레머디즈?
@@ -1165,3 +1125,4 @@ What does true freedom look like to you?
 What are your pets’ names?
 당신의 반려동물 이름은 뭐예요?
 왓 아 유어 펫츠 네임즈?
+
