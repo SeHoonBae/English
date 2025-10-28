@@ -1,43 +1,3 @@
-What are you great at?
-당신이 잘하는 것은 무엇인가요?
-왓 아 유 그레잇 앳?
-
-What factors could have stopped 9/11 happening?
-9·11 테러를 막을 수 있었던 요인은 무엇일까요?
-왓 팩터즈 쿨드 해브 스탑트 나인 일레븐 해퍼닝?
-
-What do you like most about life?
-삶에서 가장 좋아하는 것은 무엇인가요?
-왓 두 유 라이크 모스트 어바웃 라이프?
-
-What was your least favorite subject in school?
-학교에서 가장 싫어했던 과목은 무엇이었나요?
-왓 워즈 유어 리스트 페이버릿 섭젝트 인 스쿨?
-
-What's top 3 your favourite songs?
-당신이 가장 좋아하는 노래 세 곡은 무엇인가요?
-왓츠 탑 쓰리 유어 페이버릿 송즈?
-
-What should you never say to new parents?
-갓 부모가 된 사람들에게 절대 하면 안 되는 말은 무엇일까요?
-왓 슈드 유 네버 세이 투 뉴 페어런츠?
-
-How have you gotten rid of brain fog?
-당신은 머리가 멍한 상태(브레인 포그)를 어떻게 극복했나요?
-하우 해브 유 가튼 리드 오브 브레인 포그?
-
-What movie will you never watch again?
-다시는 보고 싶지 않은 영화는 무엇인가요?
-왓 무비 윌 유 네버 워치 어겐?
-
-What's on your mind?
-지금 무슨 생각을 하고 있나요?
-왓츠 온 유어 마인드?
-
-If you were god, what would you add or improve?
-당신이 신이라면 세상에 무엇을 더하거나 바꾸고 싶나요?
-이프 유 워 갓, 왓 우드 유 애드 오어 임프루브?
-
 What do you do at work when you don’t have work?
 일이 없을 때 회사에서 무엇을 하나요?
 왓 두 유 두 앳 워크 웬 유 돈트 해브 워크?
@@ -1125,3 +1085,4 @@ What is something that's easier said than done?
 How important is music to you?
 음악은 당신에게 얼마나 중요한가요?
 하우 임포턴트 이즈 뮤직 투 유?
+
