@@ -1,3 +1,7 @@
 theme: jekyll-theme-minimal
 title: 영어 공부 블로그
 description: 하루에 한 문장씩 영어 표현 배우기
+
+url: "https://sehoontalks.com/" # 블로그 주소
+plugins:
+- jekyll-sitemap
