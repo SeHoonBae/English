@@ -1,43 +1,3 @@
-What small creatures do you fear the most?
-가장 무서워하는 작은 생물은 무엇인가요?
-왓 스몰 크리처즈 두 유 피어 더 모스트?
-
-What was the saddest day of your life?
-당신 인생에서 가장 슬펐던 날은 언제였나요?
-왓 워즈 더 새디스트 데이 오브 유어 라이프?
-
-What is something that makes you cry instantly?
-즉시 눈물이 나는 일은 무엇인가요?
-왓 이즈 썸띵 댓 메익스 유 크라이 인스턴틀리?
-
-What’s your most SFW turn on?
-공공장소에서도 말할 수 있는 당신의 ‘끌림 포인트’는 무엇인가요?
-왓츠 유어 모스트 에스에프더블유 턴 온?
-
-What makes you deem someone attractive?
-누군가를 매력적이라고 느끼게 하는 건 무엇인가요?
-왓 메익스 유 딤 썸원 어트랙티브?
-
-When did you first have your relationship?
-처음 연애를 시작한 건 언제였나요?
-웬 디드 유 퍼스트 해브 유어 릴레이션십?
-
-What kind of woman gets your attention?
-어떤 유형의 여성이 당신의 관심을 끌까요?
-왓 카인드 오브 우먼 겟츠 유어 어텐션?
-
-Why are you awake right now?
-지금 왜 깨어 있는 건가요?
-와이 아 유 어웨이크 라잇 나우?
-
-What’s something that instantly ruins your mood?
-기분을 순식간에 망치게 하는 건 무엇인가요?
-왓츠 썸띵 댓 인스턴틀리 루인즈 유어 무드?
-
-What is your unethical time saving hack?
-약간 비윤리적이지만 시간을 아끼는 당신만의 요령은 무엇인가요?
-왓 이즈 유어 언에쓰컬 타임 세이빙 핵?
-
 What is the most adorable animal ever to exist?
 지금까지 존재한 동물 중 가장 사랑스러운 동물은 무엇인가요?
 왓 이즈 더 모스트 어도러블 애니멀 에버 투 이그지스트?
@@ -849,3 +809,4 @@ What do you steal from work?
 How does everyone truly have a purpose?
 모든 사람이 진정한 목적을 가진다는 건 어떻게 가능할까요?
 하우 더즈 에브리원 트루리 해브 어 퍼퍼스?
+
