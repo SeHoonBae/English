@@ -1,43 +1,3 @@
-What is the story behind your username?
-당신의 사용자 이름에는 어떤 이야기가 숨겨져 있나요?
-왓 이즈 더 스토리 비하인드 유어 유저네임?
-
-Which is the most overrated TV show of all time?
-역사상 가장 과대평가된 TV 프로그램은 무엇인가요?
-위치 이즈 더 모스트 오버레이트 티비 쇼 오브 올 타임?
-
-What makes you feel sexy?
-당신이 섹시하다고 느끼게 하는 것은 무엇인가요?
-왓 메익스 유 필 섹시?
-
-What are your thoughts on marijuana legalization?
-마리화나 합법화에 대해 어떻게 생각하시나요?
-왓 아 유어 솟츠 온 마리화나 리걸라이제이션?
-
-What’s a completely normal thing you hate doing?
-아무렇지도 않지만 하기 싫은 일은 무엇인가요?
-왓츠 어 컴플릿리 노멀 띵 유 헤이트 두잉?
-
-What’s the stupidest opinion you’ve ever heard?
-지금까지 들어본 가장 어이없는 의견은 무엇인가요?
-왓츠 더 스투피디스트 어피니언 유브 에버 헐드?
-
-Yo Reddit, what are you gonna be for Halloween?
-헤이 레딧, 이번 할로윈엔 뭘로 변장할 건가요?
-요 레딧, 왓 아 유 거너 비 포 핼러윈?
-
-How often do you think about sexual things?
-얼마나 자주 성적인 생각을 하나요?
-하우 오픈 두 유 띵크 어바웃 섹슈얼 띵스?
-
-What is one song that you never get tired of?
-아무리 들어도 질리지 않는 노래는 무엇인가요?
-왓 이즈 원 송 댓 유 네버 겟 타이어드 오브?
-
-What is the funniest thing your ex said to you?
-전 애인이 당신에게 했던 말 중 가장 웃겼던 건 무엇인가요?
-왓 이즈 더 퍼니에스트 띵 유어 엑스 새드 투 유?
-
 What was the best snack you had as a kid?
 어릴 때 먹었던 간식 중 가장 맛있었던 건 무엇인가요?
 왓 워즈 더 베스트 스낵 유 해드 애즈 어 키드?
@@ -989,3 +949,4 @@ What was your favourite book this year?
 What’s a dream you refuse to give up on?
 절대 포기하지 않을 꿈이 있다면 뭐예요?
 왓츠 어 드림 유 리퓨즈 투 기브 업 온?
+
